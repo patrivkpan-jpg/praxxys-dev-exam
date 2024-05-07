@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\ProductResource;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Validator;
-
 class ProductController extends Controller
 {
     /**
@@ -63,9 +61,8 @@ class ProductController extends Controller
             'category_id' => $category_id,
             'datetime' => $request->datetime,
         ]);
-        return Inertia::render('Products/ProductList', [
-            'products' => $this->get($request)
-        ]);
+        // TODO : Check if this works. Must redirect back to product list
+        $this->index(new Request());
     }
 
     /**
@@ -87,16 +84,35 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, int $id)
     {
-        //
+        $data = $request->all();
+        $request->merge(['id' => $id]);
+        $request->validate([
+            'id' => 'required|exists:products',
+            'name' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'category' => 'sometimes|exists:categories,name',
+            'datetime' => 'sometimes|date'
+        ]);
+
+        $category_id = Category::where('name', $request->category)->first()->id ?? '';
+        if ($category_id !== '') {
+            $data['category_id'] = $category_id;
+        }
+        Product::find($request->id)
+            ->update($data);
+        $this->index(new Request());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(int $id)
     {
-        //
+        Product::find($id)
+            ->delete();
+        $this->index(new Request());
     }
+
 }
