@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
         return [            
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->description,
+            'description' => $this->description,
             'category' => Category::find($this->category_id),
             'datetime' => $this->datetime,
         ];

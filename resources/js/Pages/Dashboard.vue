@@ -9,6 +9,7 @@ import { Head } from '@inertiajs/vue3';
 
     <AuthenticatedLayout>
         Hello world main content!
+        <slot />
     </AuthenticatedLayout>
 
 </template>

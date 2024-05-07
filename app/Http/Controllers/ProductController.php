@@ -7,6 +7,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\ProductResource;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -15,7 +17,15 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        return Inertia::render('Products/ProductList', [
+            'products' => $this->get($request)
+        ]);
+    }
+
+    public function get(Request $request)
+    {
         $search = $request->search;
+        // TODO : Create shared function for getting category id by name
         $category = Category::where('name', $request->category)->first()->id ?? '';
         $products = Product::where('category_id', 'LIKE', "%{$category}%")
             ->where(function (Builder $query) use ($search) {
@@ -39,7 +49,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'category' => 'required|exists:categories,name',
+            'datetime' => 'required|date'
+        ]);
+
+        $category_id = Category::where('name', $request->category)->first()->id ?? '';
+        Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'category_id' => $category_id,
+            'datetime' => $request->datetime,
+        ]);
+        return Inertia::render('Products/ProductList', [
+            'products' => $this->get($request)
+        ]);
     }
 
     /**
@@ -47,7 +73,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+
     }
 
     /**
