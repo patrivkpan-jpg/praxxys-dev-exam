@@ -105,7 +105,7 @@ const prevStep = () => {
                         @file-changed="(images) => form.images = images"
                     />
 
-                    <InputError :message="form.errors.image" />
+                    <InputError :message="form.errors.images" />
                 </div>
             </section>
 
@@ -130,15 +130,15 @@ const prevStep = () => {
 
             <div class="flex items-center justify-end mt-4">
 
-                <PrimaryButton class="ms-4" v-show="formStep !== 1" type="button" @click="prevStep">
+                <button class="btn btn-secondary" v-show="formStep !== 1" type="button" @click="prevStep">
                     Prev
-                </PrimaryButton>
-                <PrimaryButton class="ms-4" v-show="formStep !== 3" type="button" @click="nextStep">
+                </button>
+                <button class="btn btn-primary" v-show="formStep !== 3" type="button" @click="nextStep">
                     Next
-                </PrimaryButton>
-                <PrimaryButton class="ms-4" v-show="formStep === 3" type="button" @click="submit">
+                </button>
+                <button class="btn btn-success" v-show="formStep === 3" type="button" @click="submit">
                     Create
-                </PrimaryButton>
+                </button>
             </div>
         </form>
     </Dashboard>

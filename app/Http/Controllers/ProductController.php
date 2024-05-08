@@ -54,7 +54,8 @@ class ProductController extends Controller
                 'category' => 'required|exists:categories,name',
             ],
             '2' => [
-                'images.*' => 'required|image'
+                'images' => 'required',
+                'images.*' => 'image'
             ],
             '3' => [
                 'datetime' => 'required|date'
