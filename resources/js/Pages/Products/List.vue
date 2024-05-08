@@ -16,7 +16,11 @@ defineProps({
     <Dashboard>
         <ul v-for="product in products.data">
             <li>{{ product.name }}</li>
-            <li>{{ product.description }}</li>
+            <li>
+                <div v-html="product.description">
+
+                </div>
+            </li>
             <li>{{ product.category.name }}</li>
             <li>{{ product.datetime }}</li>
         </ul>

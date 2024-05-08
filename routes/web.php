@@ -20,7 +20,7 @@ Route::get('/', function () {
 // })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard', [ProductController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('product.index');
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,6 +29,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/products/get', [ProductController::class, 'get'])->name('product.get');
-Route::resource('products', ProductController::class);
+Route::post('/products/validate', [ProductController::class, 'validate'])->name('product.validate');
+Route::resource('products', ProductController::class)->names([
+    'index' => 'product.index',
+    'create' => 'product.create',
+    'store' => 'product.store',
+    'edit' => 'product.edit'
+]);;
 
 require __DIR__.'/auth.php';

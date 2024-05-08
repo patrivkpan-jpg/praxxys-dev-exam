@@ -11,8 +11,14 @@ import { Link } from '@inertiajs/vue3';
         <div class="row">
             <nav class="col-3">
                 <Sidebar>
-                    <SidebarLink :href="route('profile.edit')">
+                    <SidebarLink :href="route('dashboard')">
                         View Products
+                    </SidebarLink>
+                    <SidebarLink :href="route('product.create')">
+                        Add Product
+                    </SidebarLink>
+                    <SidebarLink :href="route('logout')" method="POST">
+                        Logout
                     </SidebarLink>
                 </Sidebar>
             </nav>

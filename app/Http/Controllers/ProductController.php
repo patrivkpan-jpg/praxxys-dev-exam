@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        return Inertia::render('Products/ProductList', [
+        return Inertia::render('Products/List', [
             'products' => $this->get($request)
         ]);
     }
@@ -30,6 +30,7 @@ class ProductController extends Controller
                 $query->where('name', 'LIKE', "%{$search}%")
                     ->orWhere('description', 'LIKE', "%{$search}%");
             })
+            ->orderBy('id', 'desc')
             ->paginate(10);
         return ProductResource::collection($products);
     }
@@ -39,7 +40,29 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Products/Form', [
+            'categories' => Category::get()
+        ]);
+    }
+
+    public function validate(Request $request)
+    {
+        $validate = [
+            '1' => [
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+                'category' => 'required|exists:categories,name',
+            ],
+            '2' => [
+                'images.*' => 'required|image'
+            ],
+            '3' => [
+                'datetime' => 'required|date'
+            ]
+        ];
+        $request->validate($validate[$request->step]);
+
+        return to_route('product.create');
     }
 
     /**
@@ -59,10 +82,10 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'category_id' => $category_id,
-            'datetime' => $request->datetime,
+            'datetime' => date_format(date_create($request->datetime), 'Y-m-d H:i:s'),
         ]);
-        // TODO : Check if this works. Must redirect back to product list
-        $this->index(new Request());
+        
+        return to_route('product.index');
     }
 
     /**
@@ -78,7 +101,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return Inertia::render('Products/Form');
     }
 
     /**

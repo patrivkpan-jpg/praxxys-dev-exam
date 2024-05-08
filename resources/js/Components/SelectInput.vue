@@ -8,18 +8,13 @@ const model = defineModel({
 
 const input = ref(null);
 
-onMounted(() => {
-    if (input.value.hasAttribute('autofocus')) {
-        input.value.focus();
-    }
-});
-
-defineExpose({ focus: () => input.value.focus() });
 </script>
 
 <template>
-    <input
+    <select
         v-model="model"
-        ref="input"
-    />
+        ref="input">
+        <option disabled value="">Select a category</option>
+        <slot />
+    </select>
 </template>
