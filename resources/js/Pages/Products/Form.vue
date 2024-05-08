@@ -11,32 +11,51 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import Dashboard from '@/Pages/Dashboard.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
-defineProps({
+const props = defineProps({
     categories: {
+        type: Object
+    },
+    product: {
         type: Object
     }
 });
 
+const isUpdate = computed(() => {
+    return (props.product !== undefined)
+})
+
+const action = computed(() => {
+    return (isUpdate.value) ? 'Edit' : 'Create';
+})
+
+
 const form = useForm({
-    name: '',
-    description: '',
-    category: '',
+    name: (isUpdate.value) ? props.product.data.name : '',
+    category: (isUpdate.value) ? props.product.data.category.name : '',
+    description: (isUpdate.value) ? props.product.data.description : '',
     images: '',
-    datetime: new Date(),
+    datetime: (isUpdate.value) ? props.product.data.datetime : new Date(),
 });
 
 const formStep = ref(1);
 
 const submit = () => {
-    form.post(route('product.store'));
+    let submitAction = (isUpdate.value) ? 'update' : 'store';
+    let id = (isUpdate.value) ? { id: props.product.data.id } : {}
+    form.transform((data) => ({
+        ...data,
+        '_method' : (isUpdate.value) ? 'PUT' : 'POST'
+    }))
+    .post(route(`product.${submitAction}`, id));
 };
 
 const nextStep = () => {
     form.transform((data) => ({
         ...data,
-        'step' : formStep.value
+        'step' : formStep.value,
+        'isUpdate' : isUpdate.value,
     }))
     .post(route('product.validate'), {
         onSuccess: () => {
@@ -53,7 +72,7 @@ const prevStep = () => {
 
 <template>
     <Dashboard>
-        <Head title="Create Product" />
+        <Head :title="action + ' Product'" />
 
         <form @submit.prevent="submit">
             <section v-show="formStep === 1">
@@ -137,7 +156,7 @@ const prevStep = () => {
                     Next
                 </button>
                 <button class="btn btn-success" v-show="formStep === 3" type="button" @click="submit">
-                    Create
+                    {{ action }}
                 </button>
             </div>
         </form>

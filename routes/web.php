@@ -34,7 +34,9 @@ Route::resource('products', ProductController::class)->names([
     'index' => 'product.index',
     'create' => 'product.create',
     'store' => 'product.store',
-    'edit' => 'product.edit'
+    'edit' => 'product.edit',
+    'update' => 'product.update',
+    'destroy' => 'product.destroy'
 ]);;
 
 require __DIR__.'/auth.php';

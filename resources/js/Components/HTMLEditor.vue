@@ -2,20 +2,22 @@
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import { Editor, EditorContent } from '@tiptap/vue-3'
-import { ref, watch, onMounted, onBeforeUnmount, defineModel, defineEmits } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount, defineProps, defineEmits } from 'vue'
 
-const model = defineModel({
+const props = defineProps({
+  modelValue: {
     type: String,
-    required: true,
-});
+    default: '',
+  },
+})
 
 const emits = defineEmits(['update:modelValue'])
 
 const editor = ref(null)
 
-watch(() => model, (value) => {
+watch(() => props.modelValue, (value) => {
     const isSame = editor.value.getHTML() === value
-
+    
     if (isSame === false) {
         editor.value.commands.setContent(value, false)
     }
@@ -27,7 +29,7 @@ onMounted(() => {
             StarterKit,
             Underline
         ],
-        content: model,
+        content: props.modelValue,
         onUpdate: () => {
             emits('update:modelValue', editor.value.getHTML())
         },

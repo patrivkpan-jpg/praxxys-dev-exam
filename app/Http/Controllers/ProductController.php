@@ -62,8 +62,6 @@ class ProductController extends Controller
             ]
         ];
         $request->validate($validate[$request->step]);
-
-        return to_route('product.create');
     }
 
     /**
@@ -83,6 +81,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'category_id' => $category_id,
+            // TODO : Fix timezone bug
             'datetime' => date_format(date_create($request->datetime), 'Y-m-d H:i:s'),
         ]);
         
@@ -100,9 +99,12 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(int $id)
     {
-        return Inertia::render('Products/Form');
+        return Inertia::render('Products/Form', [
+            'categories' => Category::get(),
+            'product' => new ProductResource(Product::find($id))
+        ]);
     }
 
     /**
@@ -124,9 +126,11 @@ class ProductController extends Controller
         if ($category_id !== '') {
             $data['category_id'] = $category_id;
         }
+        $data['datetime'] = date_format(date_create($request->datetime), 'Y-m-d H:i:s');
         Product::find($request->id)
             ->update($data);
-        $this->index(new Request());
+
+        return to_route('product.index');
     }
 
     /**
@@ -136,7 +140,8 @@ class ProductController extends Controller
     {
         Product::find($id)
             ->delete();
-        $this->index(new Request());
+
+        return to_route('product.index');
     }
 
 }
