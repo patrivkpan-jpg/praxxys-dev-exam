@@ -20,7 +20,7 @@ class AuthenticatedSessionController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return to_route('dashboard');
+            return to_route('product.index');
         }
         return Inertia::render('Auth/Login');
     }
@@ -45,7 +45,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('product.index', absolute: false));
     }
 
     /**

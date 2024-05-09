@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [AuthenticatedSessionController::class, 'index'])
     ->name('index');
 
-Route::get('/dashboard', [ProductController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

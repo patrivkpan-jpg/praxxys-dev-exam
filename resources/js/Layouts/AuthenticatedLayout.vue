@@ -11,7 +11,7 @@ import { Link } from '@inertiajs/vue3';
         <div class="row">
             <nav class="col-3">
                 <Sidebar>
-                    <SidebarLink :href="route('dashboard')">
+                    <SidebarLink :href="route('product.index')">
                         View Products
                     </SidebarLink>
                     <SidebarLink :href="route('product.create')">
