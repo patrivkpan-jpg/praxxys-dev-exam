@@ -13,6 +13,18 @@ use Inertia\Response;
 
 class AuthenticatedSessionController extends Controller
 {
+
+    /**
+     * Redirect user to appropriate page.
+     */
+    public function index()
+    {
+        if (Auth::check()) {
+            return to_route('dashboard');
+        }
+        return Inertia::render('Auth/Login');
+    }
+
     /**
      * Display the login view.
      */
