@@ -115,7 +115,7 @@ const deleteProduct = (id) => {
             </li>
         </ul>
         <Pagination 
-            v-if="products.data.length !== 0"
+            v-if="products.meta.last_page > 1"
             :pageNumber="pageNumber"
             :links="products.meta.links"
             :numberOfPages="products.meta.last_page"
