@@ -15,7 +15,13 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        Inertia::share('parameters', [
+            'page' => $request->page ?? '',
+            'search' => $request->search ?? '',
+            'category' => $request->category ?? '',
+        ]);
         return Inertia::render('Products/List', [
+            'categories' => Category::get(),
             'products' => $this->get($request)
         ]);
     }

@@ -8,7 +8,6 @@ import { Head } from '@inertiajs/vue3';
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        Hello world main content!
         <slot />
     </AuthenticatedLayout>
 

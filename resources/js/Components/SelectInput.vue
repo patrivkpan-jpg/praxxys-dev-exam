@@ -14,7 +14,6 @@ const input = ref(null);
     <select
         v-model="model"
         ref="input">
-        <option disabled value="">Select a category</option>
         <slot />
     </select>
 </template>

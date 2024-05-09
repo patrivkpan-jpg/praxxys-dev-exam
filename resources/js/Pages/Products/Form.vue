@@ -1,17 +1,17 @@
 <script setup>
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import SelectInput from '@/Components/SelectInput.vue';
 import SelectOption from '@/Components/SelectOption.vue';
+import CategorySelector from '@/Components/CategorySelector.vue';
 import HTMLEditor from '@/Components/HTMLEditor.vue';
 import FileInput from '@/Components/FileInput.vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import Dashboard from '@/Pages/Dashboard.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { ref, computed, onMounted } from 'vue';
+import { Head, useForm } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
     categories: {
@@ -91,12 +91,10 @@ const prevStep = () => {
                 <div>
                     <InputLabel for="email" value="Category" />
 
-                    <SelectInput
-                        id="category"
+                    <CategorySelector 
+                        :categories
                         v-model="form.category"
-                    >
-                        <SelectOption v-for="category in categories" :option="category.name" />
-                    </SelectInput>
+                    />
 
                     <InputError :message="form.errors.category" />
                 </div>
