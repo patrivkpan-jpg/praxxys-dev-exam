@@ -35,17 +35,17 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="username_email" value="Username/Email" />
-
+            <span class="h4 fw-bold">Login</span>
+            <div class="mt-4">
                 <TextInput
                     id="username_email"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 w-100"
                     v-model="form.username_email"
                     required
                     autofocus
                     autocomplete="username_email"
+                    placeholder="Username/Email"
                 />
 
                 <InputError class="mt-2" :message="form.errors.username" />
@@ -53,21 +53,20 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
                 <TextInput
                     id="password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-1 w-100"
                     v-model="form.password"
                     required
                     autocomplete="current-password"
+                    placeholder="Password"
                 />
 
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="block mt-4">
+            <div class="mt-4">
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember" />
                     <span class="ms-2 text-sm text-gray-600">Remember me</span>
@@ -79,9 +78,9 @@ const submit = () => {
             </Link>
 
             <div class="flex items-center justify-end mt-4">
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <button class="w-100 mx-auto p-1 bg-warning border border-dark fw-semibold" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
-                </PrimaryButton>
+                </button>
             </div>
         </form>
     </GuestLayout>
