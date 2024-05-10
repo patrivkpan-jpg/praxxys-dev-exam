@@ -7,7 +7,8 @@ import CategorySelector from '@/Components/CategorySelector.vue';
 import HTMLEditor from '@/Components/HTMLEditor.vue';
 import FileInput from '@/Components/FileInput.vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+import '@vuepic/vue-datepicker/dist/main.css';
+import moment from 'moment-timezone';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 
@@ -42,8 +43,11 @@ const formStep = ref(1);
 const submit = () => {
     let submitAction = (isUpdate.value) ? 'update' : 'store';
     let id = (isUpdate.value) ? { id: props.product.data.id } : {}
+    let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     form.transform((data) => ({
         ...data,
+        // Have to do this because date.datetime is in UTC format when received by backend
+        'datetime' : moment().tz(new Date(data.datetime).toString(), timezone).format(),
         '_method' : (isUpdate.value) ? 'PUT' : 'POST'
     }))
     .post(route(`product.${submitAction}`, id));

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ValidateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -29,9 +30,8 @@ class ProductController extends Controller
     public function get(Request $request)
     {
         $search = $request->search;
-        // TODO : Create shared function for getting category id by name
-        $category = Category::where('name', $request->category)->first()->id ?? '';
-        $products = Product::where('category_id', 'LIKE', "%{$category}%")
+        $category_id = $this->getCategorIdyByName($request->category);
+        $products = Product::where('category_id', 'LIKE', "%{$category_id}%")
             ->where(function (Builder $query) use ($search) {
                 $query->where('name', 'LIKE', "%{$search}%")
                     ->orWhere('description', 'LIKE', "%{$search}%");
@@ -51,23 +51,9 @@ class ProductController extends Controller
         ]);
     }
 
-    public function validate(Request $request)
+    public function validate(ValidateProductRequest $validationRequest)
     {
-        $validate = [
-            '1' => [
-                'name' => 'required|string|max:255',
-                'description' => 'required|string',
-                'category' => 'required|exists:categories,name',
-            ],
-            '2' => [
-                'images' => 'required',
-                'images.*' => 'image'
-            ],
-            '3' => [
-                'datetime' => 'required|date'
-            ]
-        ];
-        $request->validate($validate[$request->step]);
+        $validationRequest->validated();
     }
 
     /**
@@ -87,7 +73,6 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'category_id' => $category_id,
-            // TODO : Fix timezone bug
             'datetime' => date_format(date_create($request->datetime), 'Y-m-d H:i:s'),
         ]);
         
@@ -120,7 +105,7 @@ class ProductController extends Controller
             'datetime' => 'sometimes|date'
         ]);
 
-        $category_id = Category::where('name', $request->category)->first()->id ?? '';
+        $category_id = $this->getCategorIdyByName($request->category);
         if ($category_id !== '') {
             $data['category_id'] = $category_id;
         }
@@ -142,4 +127,11 @@ class ProductController extends Controller
         return to_route('product.index');
     }
 
+    /**
+     * Get category id by category name
+     */
+    private function getCategorIdyByName($name)
+    {
+        return Category::where('name',$name)->first()->id ?? '';
+    }
 }
