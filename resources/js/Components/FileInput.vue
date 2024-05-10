@@ -12,6 +12,7 @@
 <template>
     <input
         type="file"
+        class="form-control"
         :multiple="canMultiple"
         :accept="accept"
         @change="$emit('fileChanged', $event.target.files)"

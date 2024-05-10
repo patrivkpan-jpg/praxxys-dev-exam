@@ -105,7 +105,7 @@ const submit = () => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <button class="w-100 mx-auto p-1 bg-warning border border-dark fw-semibold" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <button class="btn btn-warning w-100 mx-auto p-1 border border-dark fw-semibold" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
                 </button>
             </div>

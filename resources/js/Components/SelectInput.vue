@@ -12,6 +12,7 @@ const input = ref(null);
 
 <template>
     <select
+        class="form-select mt-1"
         v-model="model"
         ref="input">
         <slot />

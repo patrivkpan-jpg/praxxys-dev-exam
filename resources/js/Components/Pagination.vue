@@ -28,3 +28,9 @@ defineEmits(['updatePage'])
         {{ links[n].label }}
     </button>
 </template>
+
+<style>
+.active-page-number {
+    font-weight: 800;
+}
+</style>
