@@ -82,12 +82,12 @@ const prevStep = () => {
                 1
             </span>
             <span class="step-counter border"
-                :class="[ formStep === 3 ? 'bg-warning border-secondary' : 'bg-secondary-subtle border-warning' ]" 
+                :class="[ formStep === 2 ? 'bg-warning border-secondary' : 'bg-secondary-subtle border-warning' ]" 
             >
                 2
             </span>
             <span class="step-counter border"
-                :class="[ formStep === 2 ? 'bg-warning border-secondary' : 'bg-secondary-subtle border-warning' ]" 
+                :class="[ formStep === 3 ? 'bg-warning border-secondary' : 'bg-secondary-subtle border-warning' ]" 
             >
                 3
             </span>
@@ -201,12 +201,12 @@ const prevStep = () => {
 </template>
 
 <style>
-.step-counter {
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    padding: 6px 0;
-    font-size: 24px;
-    border-radius: 50px;
-}
+    .step-counter {
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 24px;
+        border-radius: 50px;
+    }
 </style>

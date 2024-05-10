@@ -1,5 +1,6 @@
 <script setup>
 import Sidebar from '@/Components/Sidebar.vue'
+import SidebarCollapsible from '@/Components/SidebarCollapsible.vue'
 import SidebarLink from '@/Components/SidebarLink.vue'
 
 </script>
@@ -7,27 +8,31 @@ import SidebarLink from '@/Components/SidebarLink.vue'
 <template>
     <div class="container-fluid h-100 p-0">
         <div class="row h-100">
-            <section class="col-2 p-0">
-                
+            <aside class="col-2 p-0 h-100 position-fixed">
                 <nav class="navbar bg-secondary border-bottom">
                     <div class="container-fluid">
                         <span class="navbar-brand mb-0 mx-auto text-dark fw-semibold">PRA<span class="text-warning">XX</span>YS Technical Exam</span>
                     </div>
                 </nav>
-                <Sidebar class="bg-secondary h-100">
-                    <SidebarLink :href="route('product.index')">
-                        View Products
-                    </SidebarLink>
-                    <SidebarLink :href="route('product.create')">
-                        Add Product
-                    </SidebarLink>
-                    <SidebarLink :href="route('logout')" as="button" method="POST">
+                <Sidebar>
+                    <SidebarCollapsible
+                        :show="$page.props.page === 'products'"
+                        :label="'Product'"
+                    >
+                        <SidebarLink :href="route('product.index')" as="button">
+                            > View Products
+                        </SidebarLink>
+                        <SidebarLink :href="route('product.create')" as="button">
+                            > Add Product
+                        </SidebarLink>
+                    </SidebarCollapsible>
+                    <SidebarLink class="btn btn-secondary" :href="route('logout')" as="button" method="POST">
                         Logout
                     </SidebarLink>
                 </Sidebar>
-            </section>
+            </aside>
             <main class="col-10 p-0">
-                <nav class="main-nav navbar bg-body-secondary border-bottom border-start">
+                <nav class="main-nav navbar w-100 bg-body-secondary border-bottom border-start">
                     <div class="container-fluid">
                         <span></span>
                         <span class="navbar-text float-end me-2">Greetings, {{ $page.props.auth.user.name }}!</span>
@@ -40,3 +45,9 @@ import SidebarLink from '@/Components/SidebarLink.vue'
         </div>
     </div>
 </template>
+
+<style>
+    main {
+        margin-left: 16.5%!important;
+    }
+</style>

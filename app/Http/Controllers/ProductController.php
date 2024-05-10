@@ -18,7 +18,7 @@ class ProductController extends Controller
         Inertia::share('parameters', [
             'page' => $request->page ?? '',
             'search' => $request->search ?? '',
-            'category' => $request->category ?? '',
+            'category' => $request->category ?? ''
         ]);
         return Inertia::render('Products/List', [
             'categories' => Category::get(),

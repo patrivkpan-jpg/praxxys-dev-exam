@@ -11,6 +11,7 @@ defineProps({
 
 <template>
     <Link
+        class="btn btn-secondary"
         :href="href"
     >
         <slot />

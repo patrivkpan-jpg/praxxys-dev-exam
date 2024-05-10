@@ -29,11 +29,13 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $page = explode('/', $request->path())[0];
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user()
             ],
+            'page' => $page
         ];
     }
 }
