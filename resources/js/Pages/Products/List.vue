@@ -36,6 +36,14 @@ const searchUrl = computed(() => {
     return searchUrl;
 })
 
+watch(() => search.value, () => {
+    pageNumber.value = 1;
+})
+
+watch(() => categorySearch.value, () => {
+    pageNumber.value = 1;
+})
+
 watch(() => searchUrl.value, (updatedSearchUrl) => {
     router.visit(updatedSearchUrl, {
         replace: true,
