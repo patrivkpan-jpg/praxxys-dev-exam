@@ -48,6 +48,6 @@ import SidebarLink from '@/Components/SidebarLink.vue'
 
 <style>
     main {
-        margin-left: 16.5%!important;
+        margin-left: 16.6%!important;
     }
 </style>
