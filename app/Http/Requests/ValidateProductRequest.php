@@ -39,6 +39,9 @@ class ValidateProductRequest extends FormRequest
         return $validate[$this->step];
     }
 
+    /**
+     * Prepare the data for validation.
+     */
     protected function prepareForValidation(): void
     {
         $description = (empty(strip_tags($this->description)) === true) ? null : strip_tags($this->description);
