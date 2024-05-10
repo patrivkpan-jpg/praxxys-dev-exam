@@ -163,7 +163,7 @@ const prevStep = () => {
 
             <section v-show="formStep === 3">
                 <div class="form-group mt-4">
-                    <InputLabel for="datetime" value="Datetime" />
+                    <InputLabel for="datetime" value="Date and Time" />
 
                     <VueDatePicker
                         id="datetime"
