@@ -1,5 +1,5 @@
 <script setup>
-import Dashboard from '@/Pages/Dashboard.vue';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 import TextInput from '@/Components/TextInput.vue';
 import CategorySelector from '@/Components/CategorySelector.vue';
 import Pagination from '@/Components/Pagination.vue';
@@ -60,7 +60,7 @@ const deleteProduct = (id) => {
 <template>
     <Head title="Product List" />
 
-    <Dashboard class="container">
+    <DashboardLayout>
         <div class="row">
             <div class="col-10">
                 <div class="row input-group">
@@ -175,7 +175,7 @@ const deleteProduct = (id) => {
             :numberOfPages="products.meta.last_page"
             @update-page="(updatedPageNumber) => pageNumber = updatedPageNumber"
         />
-    </Dashboard>
+    </DashboardLayout>
 </template>
 <style>
     .toggle-description {

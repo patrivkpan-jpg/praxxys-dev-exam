@@ -1,15 +1,13 @@
 <script setup>
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
-import SelectInput from '@/Components/SelectInput.vue';
-import SelectOption from '@/Components/SelectOption.vue';
 import CategorySelector from '@/Components/CategorySelector.vue';
 import HTMLEditor from '@/Components/HTMLEditor.vue';
 import FileInput from '@/Components/FileInput.vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import Dashboard from '@/Pages/Dashboard.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 
@@ -71,7 +69,7 @@ const prevStep = () => {
 </script>
 
 <template>
-    <Dashboard>
+    <DashboardLayout>
         <Head :title="action + ' Product'" />
 
         <h1 class="fw-semibold">{{ action }} Product</h1>
@@ -197,7 +195,7 @@ const prevStep = () => {
             </div>
         </form>
         
-    </Dashboard>
+    </DashboardLayout>
 </template>
 
 <style>
